@@ -29,7 +29,7 @@ init([]) ->
     SupFlags = #{strategy => one_for_all,
                  intensity => 0,
                  period => 1},
-    ChildSpecs = [child(customer_request_server,worker)],
+    ChildSpecs = [child(customer_request_server,worker),child(update_price_server,worker)],
     {ok, {SupFlags, ChildSpecs}}.
 
 %% internal functions
