@@ -81,7 +81,11 @@ get_prices_of(List) -> gen_server:call(?MODULE, {prices_of,List}).
 %%--------------------------------------------------------------------
 -spec init(term()) -> {ok, term()}|{ok, term(), number()}|ignore |{stop, term()}.
 init([]) ->
-        {ok,replace_up}.
+    %{Success, Riak_PID} = riakc_pb_socket:start_link("rdb.fordark.org", 8087).
+    	case riakc_pb_socket:start_link("fr1.foresth11projects.com", 8087) of 
+	     {ok,Riak_Pid} -> {ok,Riak_Pid};
+	     _ -> {stop,link_failure}
+	end.
 %%--------------------------------------------------------------------
 %% @private
 %% @doc
@@ -97,7 +101,7 @@ init([]) ->
                                   {stop, term(), term(), integer()} | 
                                   {stop, term(), term()}.
 handle_call({prices_of,List}, _From, State) ->
-        Result = db_interface:get_prices(List),
+        Result = db_interface:get_prices(List, State),
         {reply, Result, State};
 handle_call(_Request, _From, State) ->
         {reply,replace_started,State};
@@ -173,7 +177,7 @@ get_price_of_test_() ->
     {setup,
      fun() -> %this setup fun is run once befor the tests are run. If you want setup and teardown to run for each test, change {setup to {foreach
         meck:new(db_interface),
-        meck:expect(db_interface, get_prices, fun(List) -> worked end)
+        meck:expect(db_interface, get_prices, fun(List,Riak_PID) -> worked end)
         
      end,
      fun(_) ->%This is the teardown fun. Notice it takes one, ignored in this example, parameter.

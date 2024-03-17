@@ -66,7 +66,7 @@ start(Registration_type,Name,Args) ->
 stop() -> gen_server:call(?MODULE, stop).
 
 %% Any other API functions go here.
-set_prices_of(List) -> gen_server:call(?MODULE, {set_prices_of,List}).
+set_prices_of(List) -> gen_server:call(?MODULE, {set_price,List}).
 
 %%%===================================================================
 %%% gen_server callbacks
@@ -96,8 +96,8 @@ init([]) ->
                                   {noreply, term(), integer()} |
                                   {stop, term(), term(), integer()} | 
                                   {stop, term(), term()}.
-handle_call({set_prices_of,Map}, _From, State) ->
-        Result = db_interface:set_prices(Map),
+handle_call({set_price,Map}, _From, State) ->
+        Result = db_interface:set_prices(Map, State),
         {reply, Result, State};
 handle_call(_Request, _From, State) ->
         {reply,replace_started,State};
@@ -169,11 +169,11 @@ code_change(_OldVsn, State, _Extra) ->
 -include_lib("eunit/include/eunit.hrl").
 
 
-get_price_of_test_() ->
+set_price_of_test_() ->
     {setup,
      fun() -> %this setup fun is run once befor the tests are run. If you want setup and teardown to run for each test, change {setup to {foreach
         meck:new(db_interface),
-        meck:expect(db_interface, set_prices, fun(Map) -> worked end)
+        meck:expect(db_interface, set_prices, fun(Map,Riak_PID) -> worked end)
         
      end,
      fun(_) ->%This is the teardown fun. Notice it takes one, ignored in this example, parameter.
@@ -182,7 +182,10 @@ get_price_of_test_() ->
     [%This is the list of tests to be generated and run.
         % ?_assertEqual({})
         ?_assertEqual({reply,worked,some_Db_PID},
-                            customer_request_server:handle_call({set_prices_of,#{<<"milk">>=>1.25,<<"butter">> => 1.00,<<"eggs">>=>2.00}}, some_from_pid, some_Db_PID))
+                            update_price_server:handle_call({set_price,#{<<"milk">>=>1.25,<<"butter">> => 1.00,<<"eggs">>=>2.00}}, some_from_pid, some_Db_PID)),
+        ?_assertEqual({reply,worked,some_Db_PID},
+                            update_price_server:handle_call({set_price,word}, some_from_pid, some_Db_PID))
+    
     ]}.
     
 -endif.
