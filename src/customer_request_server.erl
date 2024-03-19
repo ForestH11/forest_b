@@ -83,7 +83,8 @@ get_prices_of(List) -> gen_server:call(?MODULE, {prices_of,List}).
 -spec init(term()) -> {ok, term()}|{ok, term(), number()}|ignore |{stop, term()}.
 init([]) ->
     %{Success, Riak_PID} = riakc_pb_socket:start_link("rdb.fordark.org", 8087).
-    	case riakc_pb_socket:start_link("fr1.foresth11projects.com", 8087) of 
+    io:format("~nHello"),
+    	case riakc_pb_socket:start_link("fr1.foresth11projects.com", 10017) of 
 	     {ok,Riak_Pid} -> {ok,Riak_Pid};
 	     _ -> {stop,link_failure}
 	end.
