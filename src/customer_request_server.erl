@@ -85,8 +85,8 @@ init([]) ->
     %{Success, Riak_PID} = riakc_pb_socket:start_link("rdb.fordark.org", 8087).
     io:format("~nHello"),
     	case riakc_pb_socket:start_link("fr1.foresth11projects.com", 8087) of 
-	     {ok,Riak_Pid} -> {ok,Riak_Pid};
-	     _ -> {stop,link_failure}
+	     {ok,Riak_Pid} -> io:format("~nSuccess~n"),{ok,Riak_Pid};
+	     _ -> io:format("~nfailure~n"),{stop,link_failure}
 	end.
 %%--------------------------------------------------------------------
 %% @private
