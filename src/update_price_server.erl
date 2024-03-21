@@ -81,7 +81,12 @@ set_prices_of(List) -> gen_server:call(?MODULE, {set_price,List}).
 %%--------------------------------------------------------------------
 -spec init(term()) -> {ok, term()}|{ok, term(), number()}|ignore |{stop, term()}.
 init([]) ->
-        {ok,replace_up}.
+        %{Success, Riak_PID} = riakc_pb_socket:start_link("rdb.fordark.org", 8087).
+    % io:format("~nHello"),
+    	case riakc_pb_socket:start_link("fr1.foresth11projects.com", 10017) of 
+	     {ok,Riak_Pid} -> {ok,Riak_Pid};
+	     _ -> {stop,link_failure}
+	end.
 %%--------------------------------------------------------------------
 %% @private
 %% @doc
