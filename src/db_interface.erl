@@ -23,7 +23,7 @@ get_location_prices(Riak_PID,Bucket,List) ->
 		List),
 	% {ok, Fetched} = riakc_pb_socket:get(Riak_PID, Bucket,Key),
 	{_,Total} = lists:mapfoldl(fun(X,Acc) -> 
-		Acc + binary_to_float(riakc_obj:get_value(X)) end, 0.0, New_list),
+		Acc + binary_to_term(riakc_obj:get_value(X)) end, 0.0, New_list),
 	Total.	
 
 set_prices(Map,Riak_PID) ->
