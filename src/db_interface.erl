@@ -27,7 +27,7 @@ get_location_prices(Riak_PID,Bucket,List) ->
 	Total.	
 
 set_prices(Map,Riak_PID) ->
-	Iterator = maps:iterator(Map,Riak_PID),
+	Iterator = maps:iterator(Map),
 	set_price(Riak_PID,<<"store1">>,maps:next(Iterator)).
 
 set_price(_,_,none) ->
