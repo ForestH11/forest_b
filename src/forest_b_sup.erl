@@ -29,13 +29,24 @@ init([]) ->
     SupFlags = #{strategy => one_for_all,
                  intensity => 1,
                  period => 10},
-    ChildSpecs = [child(customer_request_server,worker),child(update_price_server,worker)],
+    ChildSpecs = [
+        child(customer_request_server,crs1,worker),
+        child(customer_request_server,crs2,worker),
+        child(update_price_server,worker)
+    ],
     {ok, {SupFlags, ChildSpecs}}.
 
 %% internal functions
 child(Module,Type) ->
     #{id => Module,
         start => {Module,start,[]},
+        restart => permanent,
+        shutdown => 2000,
+        type => Type,
+        modules => [Module]}.
+child(Module,Id,Type) ->
+    #{id => Id,
+        start => {Module,start,[local,Id,[]]},
         restart => permanent,
         shutdown => 2000,
         type => Type,
