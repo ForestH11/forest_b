@@ -30,8 +30,9 @@ init([]) ->
                  intensity => 1,
                  period => 10},
     ChildSpecs = [
-        child(customer_request_server,crs1,worker),
-        child(customer_request_server,crs2,worker),
+        % child(customer_request_server,crs1,worker),
+        % child(customer_request_server,crs2,worker),
+        child(customer_request_server,worker),
         child(update_price_server,worker)
     ],
     {ok, {SupFlags, ChildSpecs}}.
