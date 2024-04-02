@@ -39,7 +39,7 @@
 %%--------------------------------------------------------------------
 -spec start() -> {ok, pid()} | ignore | {error, term()}.
 start() ->
-    io:format("I was called"),
+    % io:format("I was called"),
     gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 %%--------------------------------------------------------------------
 %% @doc
