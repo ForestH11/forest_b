@@ -35,7 +35,7 @@ init([]) ->
         % child(customer_request_server,worker),
         % child(update_price_server,worker)
         child(request_update_sup, supervisor),
-        child(rrobin_serv, worker)
+        child(rrobin_serv, {worker,[crs1,crs2]})
     ],
     {ok, {SupFlags, ChildSpecs}}.
 
@@ -43,6 +43,13 @@ init([]) ->
 child(Module,Type) ->
     #{id => Module,
         start => {Module,start,[]},
+        restart => permanent,
+        shutdown => 2000,
+        type => Type,
+        modules => [Module]};
+child(Module,{Type,Args}) ->
+    #{id => Module,
+        start => {Module,start,[Args]},
         restart => permanent,
         shutdown => 2000,
         type => Type,
