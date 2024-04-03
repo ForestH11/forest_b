@@ -40,16 +40,16 @@ init([]) ->
     {ok, {SupFlags, ChildSpecs}}.
 
 %% internal functions
-child(Module,Type) ->
+child(Module,{Type,Args}) ->
     #{id => Module,
-        start => {Module,start,[]},
+        start => {Module,start,[Args]},
         restart => permanent,
         shutdown => 2000,
         type => Type,
         modules => [Module]};
-child(Module,{Type,Args}) ->
+child(Module,Type) ->
     #{id => Module,
-        start => {Module,start,[Args]},
+        start => {Module,start,[]},
         restart => permanent,
         shutdown => 2000,
         type => Type,
