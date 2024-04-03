@@ -35,7 +35,7 @@ init([]) ->
         % child(customer_request_server,worker),
         % child(update_price_server,worker)
         child(request_update_sup, supervisor),
-        child(rrobin_serv, {worker,[crs1,crs2]})
+        child(rrobin_serv, {worker,[crs1,crs2,crs3,crs4,crs5,crs6,crs7,crs8]})
     ],
     {ok, {SupFlags, ChildSpecs}}.
 

@@ -98,6 +98,12 @@ init([]) ->
     ChildSpecs = [
         generate_spec(customer_request_server,crs1,worker),
         generate_spec(customer_request_server,crs2,worker),
+        generate_spec(customer_request_server,crs3,worker),
+        generate_spec(customer_request_server,crs4,worker),
+        generate_spec(customer_request_server,crs5,worker),
+        generate_spec(customer_request_server,crs6,worker),
+        generate_spec(customer_request_server,crs7,worker),
+        generate_spec(customer_request_server,crs8,worker),
         % generate_spec(customer_request_server,worker),
         generate_spec(update_price_server,worker)
     ],
