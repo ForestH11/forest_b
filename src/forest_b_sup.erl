@@ -32,8 +32,10 @@ init([]) ->
     ChildSpecs = [
         % child(customer_request_server,crs1,worker),
         % child(customer_request_server,crs2,worker),
-        child(customer_request_server,worker),
-        child(update_price_server,worker)
+        % child(customer_request_server,worker),
+        % child(update_price_server,worker)
+        child(request_update_sup, supervisor),
+        child(rrobin_serv, worker)
     ],
     {ok, {SupFlags, ChildSpecs}}.
 
