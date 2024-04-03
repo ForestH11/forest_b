@@ -35,9 +35,12 @@ init([]) ->
         % child(customer_request_server,worker),
         % child(update_price_server,worker)
         child(request_update_sup, supervisor),
-        child(rrobin_serv, {worker,[crs1,crs2,crs3,crs4,crs5,crs6,crs7,crs8]})
+        child(rrobin_serv, {worker,[crs1,crs2,crs3,crs4,crs5,crs6,crs7,crs8,crs9,crs10,crs11,crs12,crs13,crs14,crs15,crs16,crs17,crs18,crs19,crs20,crs21,crs22,crs23,crs24,crs25,crs26,crs27,crs28,crs29,crs30,crs31,crs32,crs33,crs34,crs35,crs36,crs37,crs38,crs39,crs40,crs41,crs42,crs43,crs44,crs45,crs46,crs47,crs48,crs49,crs50,crs51,crs52,crs53,crs54
+]})
     ],
     {ok, {SupFlags, ChildSpecs}}.
+
+
 
 %% internal functions
 child(Module,{Type,Args}) ->
